@@ -92,9 +92,13 @@ def scrape_channel(channel_url):
         # Calculate total views
         total_views = df['views_count'].sum()
         
-        # Generate filename using channel name
+        # Create data directory if it doesn't exist
+        data_dir = os.path.join(os.getcwd(), 'data')
+        os.makedirs(data_dir, exist_ok=True)
+        
+        # Generate safe filename using channel name
         safe_channel_name = "".join(x for x in channel_name if x.isalnum())
-        filename = f"{safe_channel_name}_videos_{datetime.now().strftime('%Y%m%d')}.csv"
+        filename = os.path.join(data_dir, f"{safe_channel_name}.csv")
         
         # Save to CSV
         df.to_csv(filename, index=False, encoding='utf-8')
